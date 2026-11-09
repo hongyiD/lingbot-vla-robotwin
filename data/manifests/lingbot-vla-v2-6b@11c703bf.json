@@ -1,0 +1,120 @@
+{
+  "repo": "robbyant/lingbot-vla-v2-6b",
+  "repo_type": "model",
+  "endpoint": "https://huggingface.co",
+  "revision_requested": "11c703bf6a5c1f45b3b69168482da11fdbba53d7",
+  "revision": "11c703bf6a5c1f45b3b69168482da11fdbba53d7",
+  "created_at": "2026-10-17T15:32:50+08:00",
+  "total_bytes": 28236036058,
+  "missing_tasks": [],
+  "files": [
+    {
+      "task": "added_tokens.json",
+      "path": "added_tokens.json",
+      "size": 707,
+      "sha256": null
+    },
+    {
+      "task": "config.json",
+      "path": "config.json",
+      "size": 31,
+      "sha256": null
+    },
+    {
+      "task": "depth/model.pt",
+      "path": "depth/model.pt",
+      "size": 1316220456,
+      "sha256": "d70c5191eab853d436763b35d40ff99d13534b4bcd43e4d02823656968159e5b"
+    },
+    {
+      "task": "dino_video/config.yaml",
+      "path": "dino_video/config.yaml",
+      "size": 1388,
+      "sha256": null
+    },
+    {
+      "task": "dino_video/teacher_step_10000.pth",
+      "path": "dino_video/teacher_step_10000.pth",
+      "size": 1401509792,
+      "sha256": "086285efd8d65bc66e96b363807c4010ee5c790b7452b765edaa23837a63705b"
+    },
+    {
+      "task": "model-00001-of-00006.safetensors",
+      "path": "model-00001-of-00006.safetensors",
+      "size": 4987151072,
+      "sha256": "4afb52b06a13df8b738a156ae5c8196d3bfe6b3ca931cecbd701e44cb9674e45"
+    },
+    {
+      "task": "model-00002-of-00006.safetensors",
+      "path": "model-00002-of-00006.safetensors",
+      "size": 4985113408,
+      "sha256": "ec131afa26a340db94c0dba8ec00e990be5f3d842ce6532070f0c8e26a067501"
+    },
+    {
+      "task": "model-00003-of-00006.safetensors",
+      "path": "model-00003-of-00006.safetensors",
+      "size": 4928593216,
+      "sha256": "7dccb068ca66c11fa514476d64661eeead56e2e80e1c0572c9ea82aa0d9ecf27"
+    },
+    {
+      "task": "model-00004-of-00006.safetensors",
+      "path": "model-00004-of-00006.safetensors",
+      "size": 4990740540,
+      "sha256": "1c2cb78066b69ae11255db851df95071e2cd69a3a4bc5020b3fd3b13b17819fb"
+    },
+    {
+      "task": "model-00005-of-00006.safetensors",
+      "path": "model-00005-of-00006.safetensors",
+      "size": 4990095864,
+      "sha256": "8fe36bf1f4f617869954bdfa1ad12e16abd8b0235a5fa99c88d571d4cddf4a17"
+    },
+    {
+      "task": "model-00006-of-00006.safetensors",
+      "path": "model-00006-of-00006.safetensors",
+      "size": 622195024,
+      "sha256": "3cf613d592dad64b1e2a1b1bb34a6f556a7fa05eacdb9972d73e0ea4882555a0"
+    },
+    {
+      "task": "model.safetensors.index.json",
+      "path": "model.safetensors.index.json",
+      "size": 207389,
+      "sha256": null
+    },
+    {
+      "task": "preprocessor_config.json",
+      "path": "preprocessor_config.json",
+      "size": 782,
+      "sha256": null
+    },
+    {
+      "task": "special_tokens_map.json",
+      "path": "special_tokens_map.json",
+      "size": 613,
+      "sha256": null
+    },
+    {
+      "task": "tokenizer.json",
+      "path": "tokenizer.json",
+      "size": 11422654,
+      "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+    },
+    {
+      "task": "tokenizer_config.json",
+      "path": "tokenizer_config.json",
+      "size": 5472,
+      "sha256": null
+    },
+    {
+      "task": "video_preprocessor_config.json",
+      "path": "video_preprocessor_config.json",
+      "size": 817,
+      "sha256": null
+    },
+    {
+      "task": "vocab.json",
+      "path": "vocab.json",
+      "size": 2776833,
+      "sha256": null
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+# LingBot 训练用 Deployment，参照平台提供的 Deployment 样例写成。
+#
+# 使用方式：
+# 1. 把 image 里的 <REGISTRY>/<PROJECT> 和 namespace 换成自己集群的值。换了新镜像就改 image 那一行的 tag。
+# 2. 平台控制台：工作负载 → Deployments → 新建 Deployment，只填名称 lingbot-train 和完整镜像地址；创建后进 YAML 页，
+#    用本文件的 spec: 整段替换平台生成的 spec:，保留平台生成的 metadata。
+#    能用 kubectl 时：kubectl apply -f lingbot-train.deployment.yaml
+# 3. 训练开始后不要再改 YAML、Restart 或 Scale：Pod 会重建，tmux 里的训练会中断。
+#
+# 存储用已有的 lingbot-vla 卷（RWX）：我们的文件都放在其中的 embodiedx/ 目录，挂成 /mnt/work；整个卷另外只读挂到 /mnt/vla，
+# 权重目录 W=/mnt/work/weights：6b 和 Qwen 软链接到卷里已有的 models/，MoGe-2 单独下载。
+# 与样例的不同：更新策略用 Recreate；加了 Pod 出网代理；关掉 Service 环境变量注入。
+# 样例里的 restartPolicy、dnsPolicy、schedulerName、securityContext、terminationMessage* 等是 Kubernetes 默认值，这里省略。
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lingbot-train
+  namespace: <NAMESPACE>               # 平台概览页显示的命名空间；在控制台的 YAML 页里只替换 spec 时不用管这一行
+  labels:
+    app: lingbot-train
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lingbot-train
+  strategy:
+    type: Recreate                 # 样例是 RollingUpdate：它先起新 Pod，新 Pod 要等旧 Pod 释放 4 张卡，会一直卡住
+  template:
+    metadata:
+      labels:
+        app: lingbot-train
+    spec:
+      enableServiceLinks: false    # 不注入 <NAME>_PORT 之类的 Service 环境变量，避免干扰 torchrun
+      # imagePullSecrets:          # 样例里没有；事件里出现 ImagePullBackOff 且提示 unauthorized 时，向运维要 secret 名填这里
+      #   - name: <secret>
+      containers:
+        - name: lingbot-train
+          image: <REGISTRY>/<PROJECT>/lingbotvla-train:20261017-be969b8-r1   # 必须写完整地址
+          imagePullPolicy: IfNotPresent
+          workingDir: /opt/lingbot-vla-v2
+          command:
+            - /bin/bash
+          args:
+            - -lc
+            - |
+              echo "lingbot-train container started."
+              cat /opt/embodiedx/IMAGE_INFO
+              echo "Open a terminal, run bash, then: source /mnt/work/k8s.env; run long jobs inside tmux."
+              sleep infinity
+          env:                     # Pod 出网代理（地址见平台说明）；训练本身离线运行
+            - {name: http_proxy, value: "http://<PROXY_HOST>:<PROXY_PORT>"}
+            - {name: https_proxy, value: "http://<PROXY_HOST>:<PROXY_PORT>"}
+            - {name: HTTP_PROXY, value: "http://<PROXY_HOST>:<PROXY_PORT>"}
+            - {name: HTTPS_PROXY, value: "http://<PROXY_HOST>:<PROXY_PORT>"}
+            - {name: no_proxy, value: "localhost,127.0.0.1,<CLUSTER_CIDRS>,.svc,.cluster.local"}
+            - {name: NO_PROXY, value: "localhost,127.0.0.1,<CLUSTER_CIDRS>,.svc,.cluster.local"}
+            - {name: NVIDIA_DRIVER_CAPABILITIES, value: "all"}   # 挂入 NVIDIA 图形库（Vulkan），评测渲染要用；镜像默认只有 compute,utility
+          # 必须落在命名空间剩余配额以内；GPU 资源名与平台样例相同。
+          # 运维放宽 CPU 配额后单独跑放得下，但和 lingbot-data 同时跑放不下：建之前先把 lingbot-data 缩到 0。
+          resources:
+            requests:
+              cpu: "16"
+              memory: 128Gi
+              nvidia.com/gpu: "4"
+            limits:
+              cpu: "64"
+              memory: 400Gi        # 含下面 64Gi 的 /dev/shm
+              nvidia.com/gpu: "4"
+          volumeMounts:
+            - {name: vla, mountPath: /mnt/work, subPath: embodiedx}   # 我们的目录：配置、数据、日志、checkpoint、缓存
+            - {name: vla, mountPath: /mnt/vla, readOnly: true}        # 整个卷只读：已有的 models/、datasets/ 等
+            - {name: dshm, mountPath: /dev/shm}
+      volumes:
+        - name: vla                # 已有的 lingbot-vla 卷（RWX），可以同时挂到 lingbot-data 和 lingbot-train
+          persistentVolumeClaim:
+            claimName: lingbot-vla
+        - name: dshm               # 容器默认 /dev/shm 只有 64 MiB，dataloader worker 和 NCCL 需要更多
+          emptyDir:
+            medium: Memory
+            sizeLimit: 64Gi

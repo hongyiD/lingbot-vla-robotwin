@@ -1,0 +1,18 @@
+{
+  "repo": "Ruicheng/moge-2-vitb-normal",
+  "repo_type": "model",
+  "endpoint": "https://huggingface.co",
+  "revision_requested": "ca5f0e07ff01d3e5a364c1d954ed12ee1814b368",
+  "revision": "ca5f0e07ff01d3e5a364c1d954ed12ee1814b368",
+  "created_at": "2026-10-17T15:32:51+08:00",
+  "total_bytes": 419110160,
+  "missing_tasks": [],
+  "files": [
+    {
+      "task": "model.pt",
+      "path": "model.pt",
+      "size": 419110160,
+      "sha256": "16b8110e86d5dc5a849db120ca96ef3a223fd30b0c9146d1d81db504073da5f6"
+    }
+  ]
+}

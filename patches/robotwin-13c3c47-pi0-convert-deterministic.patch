@@ -1,0 +1,119 @@
+--- a/policy/pi0/examples/aloha_real/convert_aloha_data_to_lerobot_robotwin.py
++++ b/policy/pi0/examples/aloha_real/convert_aloha_data_to_lerobot_robotwin.py
+@@ -20,6 +20,9 @@
+ import json
+ import os
+ import fnmatch
++import csv
++import hashlib
++import re
+ 
+ 
+ @dataclasses.dataclass(frozen=True)
+@@ -200,16 +203,45 @@
+     return imgs_per_cam, state, action, velocity, effort
+ 
+ 
++def episode_number(path: str) -> int | None:
++    """k for episode_k.hdf5, which process_data.py writes from raw episode{k}.hdf5."""
++    match = re.fullmatch(r"episode_(\d+)\.hdf5", os.path.basename(path))
++    return int(match.group(1)) if match else None
++
++
++def episode_sort_key(path: str) -> tuple[bool, int, str]:
++    number = episode_number(path)
++    return (number is None, number or 0, path)
++
++
++def pick_instruction(instructions: list[str], seed: int, dataset_key: str, episode_file: str) -> int:
++    """Uniform pick like np.random.choice, fixed by (seed, dataset, episode file) on any run or machine."""
++    digest = hashlib.sha256(f"{seed}/{dataset_key}/{episode_file}".encode("utf-8")).digest()
++    return int.from_bytes(digest[:8], "big") % len(instructions)
++
++
+ def populate_dataset(
+     dataset: LeRobotDataset,
+     hdf5_files: list[Path],
+     task: str,
+     episodes: list[int] | None = None,
++    *,
++    dataset_key: str = "",
++    instruction_seed: int = 0,
++    instruction_map: Path | None = None,
+ ) -> LeRobotDataset:
+     if episodes is None:
+         episodes = range(len(hdf5_files))
+ 
+-    for ep_idx in tqdm.tqdm(episodes):
++    map_file = map_writer = None
++    if instruction_map is not None:
++        instruction_map.parent.mkdir(parents=True, exist_ok=True)
++        map_file = open(instruction_map, "w", newline="", encoding="utf-8")
++        map_writer = csv.writer(map_file)
++        map_writer.writerow(["episode_index", "raw_episode", "source_hdf5", "num_frames", "instruction_index",
++                             "num_instructions", "instruction"])
++
++    for out_idx, ep_idx in enumerate(tqdm.tqdm(episodes)):
+         ep_path = hdf5_files[ep_idx]
+ 
+         imgs_per_cam, state, action, velocity, effort = load_raw_episode_data(ep_path)
+@@ -221,7 +253,8 @@
+         with open(json_Path, 'r') as f_instr:
+             instruction_dict = json.load(f_instr)
+             instructions = instruction_dict['instructions']
+-            instruction = np.random.choice(instructions)
++            instruction_index = pick_instruction(instructions, instruction_seed, dataset_key, os.path.basename(ep_path))
++            instruction = instructions[instruction_index]
+         for i in range(num_frames):
+             frame = {
+                 "observation.state": state[i],
+@@ -238,7 +271,15 @@
+                 frame["observation.effort"] = effort[i]
+             dataset.add_frame(frame)
+         dataset.save_episode()
++        if map_writer is not None:
++            raw_episode = episode_number(ep_path)
++            map_writer.writerow([out_idx, "" if raw_episode is None else raw_episode,
++                                 os.path.relpath(ep_path, os.path.dirname(dir_path)), num_frames, instruction_index,
++                                 len(instructions), instruction])
++            map_file.flush()
+ 
++    if map_file is not None:
++        map_file.close()
+     return dataset
+ 
+ 
+@@ -253,6 +294,8 @@
+     is_mobile: bool = False,
+     mode: Literal["video", "image"] = "image",
+     dataset_config: DatasetConfig = DEFAULT_DATASET_CONFIG,
++    instruction_seed: int = 0,
++    instruction_map_dir: Path | None = None,
+ ):
+     if (HF_LEROBOT_HOME / repo_id).exists():
+         shutil.rmtree(HF_LEROBOT_HOME / repo_id)
+@@ -266,6 +309,8 @@
+         for filename in fnmatch.filter(files, '*.hdf5'):
+             file_path = os.path.join(root, filename)
+             hdf5_files.append(file_path)
++    # os.walk order depends on the filesystem; numeric order makes LeRobot episode k the raw episode k
++    hdf5_files.sort(key=episode_sort_key)
+ 
+     dataset = create_empty_dataset(
+         repo_id,
+@@ -275,11 +320,15 @@
+         has_velocity=has_velocity(hdf5_files),
+         dataset_config=dataset_config,
+     )
++    map_dir = instruction_map_dir if instruction_map_dir is not None else HF_LEROBOT_HOME.parent / "episode_instructions"
+     dataset = populate_dataset(
+         dataset,
+         hdf5_files,
+         task=task,
+         episodes=episodes,
++        dataset_key=os.path.basename(os.path.abspath(raw_dir)),
++        instruction_seed=instruction_seed,
++        instruction_map=map_dir / f"{repo_id}.csv",
+     )
+     # dataset.consolidate()
+ 

@@ -1,0 +1,74 @@
+# 数据处理 Deployment，参照平台提供的 Deployment 样例写成。
+# 和训练用同一个镜像，不申请 GPU。
+#
+# 使用方式：
+# 1. 把 image 里的 <REGISTRY>/<PROJECT> 和 namespace 换成自己集群的值。
+# 2. 创建方式同 lingbot-train.deployment.yaml，名称为 lingbot-data。
+# 3. 卷是 RWX，lingbot-train 可以和本 Deployment 同时运行；只有配额不够同时跑两个时，才把本 Deployment 缩到 0。
+#
+# 存储用已有的 lingbot-vla 卷：我们的文件都放在其中的 embodiedx/ 目录，挂成 /mnt/work；整个卷另外只读挂到 /mnt/vla。
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lingbot-data
+  namespace: <NAMESPACE>               # 平台概览页显示的命名空间；在控制台的 YAML 页里只替换 spec 时不用管这一行
+  labels:
+    app: lingbot-data
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lingbot-data
+  strategy:
+    type: Recreate                 # 改 YAML 时先停旧 Pod 再起新 Pod，避免两个 Pod 同时往同一个目录写
+  template:
+    metadata:
+      labels:
+        app: lingbot-data
+    spec:
+      enableServiceLinks: false
+      # imagePullSecrets:          # 样例里没有；事件里出现 ImagePullBackOff 且提示 unauthorized 时，向运维要 secret 名填这里
+      #   - name: <secret>
+      containers:
+        - name: lingbot-data
+          image: <REGISTRY>/<PROJECT>/lingbotvla-train:20261017-be969b8-r1
+          imagePullPolicy: IfNotPresent
+          workingDir: /opt/lingbot-vla-v2
+          command:
+            - /bin/bash
+          args:
+            - -lc
+            - |
+              echo "lingbot-data container started."
+              cat /opt/embodiedx/IMAGE_INFO
+              echo "Open a terminal, run bash, then source /mnt/work/data.env."
+              sleep infinity
+          env:                     # Pod 出网代理（地址见平台说明）
+            - {name: http_proxy, value: "http://<PROXY_HOST>:<PROXY_PORT>"}
+            - {name: https_proxy, value: "http://<PROXY_HOST>:<PROXY_PORT>"}
+            - {name: HTTP_PROXY, value: "http://<PROXY_HOST>:<PROXY_PORT>"}
+            - {name: HTTPS_PROXY, value: "http://<PROXY_HOST>:<PROXY_PORT>"}
+            - {name: no_proxy, value: "localhost,127.0.0.1,<CLUSTER_CIDRS>,.svc,.cluster.local"}
+            - {name: NO_PROXY, value: "localhost,127.0.0.1,<CLUSTER_CIDRS>,.svc,.cluster.local"}
+            - {name: HF_ENDPOINT, value: "https://hf-mirror.com"}
+            - {name: HF_HUB_DISABLE_XET, value: "1"}   # 镜像站只支持普通 HTTP 下载，不支持 Xet 协议
+          # 必须落在命名空间剩余配额以内（概览页），否则 Pod 建不出来，Deployment 显示 MinimumReplicasUnavailable。
+          resources:
+            requests:
+              cpu: "16"
+              memory: 64Gi
+            limits:
+              cpu: "32"            # 32 核并行 4 个任务
+              memory: 128Gi        # 含下面 16Gi 的 /dev/shm
+          volumeMounts:
+            - {name: vla, mountPath: /mnt/work, subPath: embodiedx}   # 我们的目录
+            - {name: vla, mountPath: /mnt/vla, readOnly: true}        # 整个卷只读：已有的 models/、datasets/ 等
+            - {name: dshm, mountPath: /dev/shm}
+      volumes:
+        - name: vla                # 已有的 lingbot-vla 卷（RWX）
+          persistentVolumeClaim:
+            claimName: lingbot-vla
+        - name: dshm               # 容器默认 /dev/shm 只有 64 MiB，B6 的 dataloader worker 需要更多
+          emptyDir:
+            medium: Memory
+            sizeLimit: 16Gi

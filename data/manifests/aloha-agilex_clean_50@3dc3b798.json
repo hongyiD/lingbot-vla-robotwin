@@ -1,0 +1,313 @@
+{
+  "repo": "TianxingChen/RoboTwin2.0",
+  "repo_type": "dataset",
+  "endpoint": "https://huggingface.co",
+  "revision_requested": "3dc3b798668feb99ac61cc9086d84cbcc3d79186",
+  "revision": "3dc3b798668feb99ac61cc9086d84cbcc3d79186",
+  "archive": "aloha-agilex_clean_50.zip",
+  "created_at": "2026-10-14T11:53:52+08:00",
+  "total_bytes": 23780715316,
+  "missing_tasks": [],
+  "files": [
+    {
+      "task": "lift_pot",
+      "path": "dataset/lift_pot/aloha-agilex_clean_50.zip",
+      "size": 280277294,
+      "sha256": "17df35b8616e718bab334b0e518ab0bca68d8a1101554250f497262da2ec820f"
+    },
+    {
+      "task": "hanging_mug",
+      "path": "dataset/hanging_mug/aloha-agilex_clean_50.zip",
+      "size": 735324234,
+      "sha256": "d854cbe1e70563417a05bffc9295e3b46e993287e43294f9575a5d4cbf8d2b09"
+    },
+    {
+      "task": "stack_bowls_three",
+      "path": "dataset/stack_bowls_three/aloha-agilex_clean_50.zip",
+      "size": 1018303066,
+      "sha256": "46ecebaaa1828c7f4c941a6761324cf445c7a66e91161d6fbf13c43a214c26ea"
+    },
+    {
+      "task": "scan_object",
+      "path": "dataset/scan_object/aloha-agilex_clean_50.zip",
+      "size": 417482645,
+      "sha256": "3908e3d03f08ceaf800a8754ed39abfe8186d1ef3797be9b0c58fe6010d613bf"
+    },
+    {
+      "task": "handover_block",
+      "path": "dataset/handover_block/aloha-agilex_clean_50.zip",
+      "size": 546033461,
+      "sha256": "7e9e7145c3f1a4093d7a24a44dc5c0b1af2ccc551c3bc8e50d7bdde824da4947"
+    },
+    {
+      "task": "click_bell",
+      "path": "dataset/click_bell/aloha-agilex_clean_50.zip",
+      "size": 139515715,
+      "sha256": "4b959d712791792a6dba9a97fa31d81cb4393acd39874470ee19070f8dbeb212"
+    },
+    {
+      "task": "put_object_cabinet",
+      "path": "dataset/put_object_cabinet/aloha-agilex_clean_50.zip",
+      "size": 711701227,
+      "sha256": "07aae71f44276920851a57d19a5864df468c758ff17ed7256e501bf2107ed6e9"
+    },
+    {
+      "task": "open_microwave",
+      "path": "dataset/open_microwave/aloha-agilex_clean_50.zip",
+      "size": 982663234,
+      "sha256": "8cf14879560849a76738fb05a1842608fe79831efac625b81aa4c886edeff132"
+    },
+    {
+      "task": "stack_blocks_three",
+      "path": "dataset/stack_blocks_three/aloha-agilex_clean_50.zip",
+      "size": 950507257,
+      "sha256": "d8b3de21979e1a89b1f8b4dbc9d95ea9622e66c1db62c4d6736be996976b0a90"
+    },
+    {
+      "task": "place_shoe",
+      "path": "dataset/place_shoe/aloha-agilex_clean_50.zip",
+      "size": 397873892,
+      "sha256": "56389d47bc4df90a40a3f0648ef4f1e48beda1d15386ee03c8586227809e29db"
+    },
+    {
+      "task": "adjust_bottle",
+      "path": "dataset/adjust_bottle/aloha-agilex_clean_50.zip",
+      "size": 298659710,
+      "sha256": "5554b6b30e37c6ed2f0bbc48079e8ad79d9512e9d4f910a5e71b0d5ad8fbe50e"
+    },
+    {
+      "task": "beat_block_hammer",
+      "path": "dataset/beat_block_hammer/aloha-agilex_clean_50.zip",
+      "size": 229401324,
+      "sha256": "a135ad233bdcffff65fb636780f95ec34abc36ccf2bd0ff26ab07c9c464cc6af"
+    },
+    {
+      "task": "blocks_ranking_rgb",
+      "path": "dataset/blocks_ranking_rgb/aloha-agilex_clean_50.zip",
+      "size": 927813070,
+      "sha256": "3752a61e42081ce64e3d3d76b5634836904bced29007b6cec8f3bfa12b4d6387"
+    },
+    {
+      "task": "blocks_ranking_size",
+      "path": "dataset/blocks_ranking_size/aloha-agilex_clean_50.zip",
+      "size": 887903544,
+      "sha256": "da55764f0b61a0a4ba2ddb6b6cf8577b96246937bb3621d6d3eace8842ac51e8"
+    },
+    {
+      "task": "click_alarmclock",
+      "path": "dataset/click_alarmclock/aloha-agilex_clean_50.zip",
+      "size": 169381564,
+      "sha256": "65f6ca24635e9937f84b441ad66cf585a330e5664035a14dc98b58348a85dca1"
+    },
+    {
+      "task": "dump_bin_bigbin",
+      "path": "dataset/dump_bin_bigbin/aloha-agilex_clean_50.zip",
+      "size": 436498168,
+      "sha256": "0b6725f856465167ad33efe94612294f2645bce86e8ad5734ab0e72f5b4824ab"
+    },
+    {
+      "task": "grab_roller",
+      "path": "dataset/grab_roller/aloha-agilex_clean_50.zip",
+      "size": 222454332,
+      "sha256": "e35c8c68022ef07517d50418e7281ec054581aaf01fce65b2a64dc7642c78f9b"
+    },
+    {
+      "task": "handover_mic",
+      "path": "dataset/handover_mic/aloha-agilex_clean_50.zip",
+      "size": 412495381,
+      "sha256": "7573da11ab08822daa3e94559081f327a887e8eb293e13cabd639a6064df70dc"
+    },
+    {
+      "task": "move_can_pot",
+      "path": "dataset/move_can_pot/aloha-agilex_clean_50.zip",
+      "size": 312581958,
+      "sha256": "fbf5231c5be71405364b09ed718cfca1e07a6509f6d1a801f5922516da0ade09"
+    },
+    {
+      "task": "move_pillbottle_pad",
+      "path": "dataset/move_pillbottle_pad/aloha-agilex_clean_50.zip",
+      "size": 283878275,
+      "sha256": "1fe168f8d156ab1ece9cb3bdf71542a24821bcd620408a04fd822e87c24bfaf0"
+    },
+    {
+      "task": "move_playingcard_away",
+      "path": "dataset/move_playingcard_away/aloha-agilex_clean_50.zip",
+      "size": 238198663,
+      "sha256": "911a26e767ed4fe2d5d5ff3a729d16a07ffd32ed0bb2fae23873fd8bb977600b"
+    },
+    {
+      "task": "place_cans_plasticbox",
+      "path": "dataset/place_cans_plasticbox/aloha-agilex_clean_50.zip",
+      "size": 848656844,
+      "sha256": "e09f4b7278872e8785d55efc0613d4d2bc1e5655731dcc9e0a7d084288785f8f"
+    },
+    {
+      "task": "place_container_plate",
+      "path": "dataset/place_container_plate/aloha-agilex_clean_50.zip",
+      "size": 286764000,
+      "sha256": "bb6a7191530f69f1bdc5d4b7d0643b89a4fbb769f0fbdc256ae1e0bc590f66f2"
+    },
+    {
+      "task": "place_dual_shoes",
+      "path": "dataset/place_dual_shoes/aloha-agilex_clean_50.zip",
+      "size": 627881534,
+      "sha256": "0cdb0e5c03a30332c928cce1c430a21da8248adc01608706487709283168f703"
+    },
+    {
+      "task": "place_empty_cup",
+      "path": "dataset/place_empty_cup/aloha-agilex_clean_50.zip",
+      "size": 300192138,
+      "sha256": "e397359cdc7b19cace5efd766fabe15e549c6722c9b90f854915198258c24fac"
+    },
+    {
+      "task": "place_fan",
+      "path": "dataset/place_fan/aloha-agilex_clean_50.zip",
+      "size": 314130763,
+      "sha256": "4b458e951402b50e8006ac10b63a8e3e5eec002e7b67e40b12ee30736b9694ff"
+    },
+    {
+      "task": "place_mouse_pad",
+      "path": "dataset/place_mouse_pad/aloha-agilex_clean_50.zip",
+      "size": 264860850,
+      "sha256": "2e20e01f599e547579e82b5667a289111e523bb526951b60d06678f6a015696f"
+    },
+    {
+      "task": "place_object_basket",
+      "path": "dataset/place_object_basket/aloha-agilex_clean_50.zip",
+      "size": 635212427,
+      "sha256": "76518a717756589fc6787741e83dff24c6467e4506de8f7c5994008765f094d2"
+    },
+    {
+      "task": "place_object_scale",
+      "path": "dataset/place_object_scale/aloha-agilex_clean_50.zip",
+      "size": 287992209,
+      "sha256": "a4a1bcf424a36026a27a67dee7c544f1e4245bee4f4cfab939b730c94812da8a"
+    },
+    {
+      "task": "place_object_stand",
+      "path": "dataset/place_object_stand/aloha-agilex_clean_50.zip",
+      "size": 283279837,
+      "sha256": "4fd24a6e29b63149b4c5c1598cb16dccb25514acb60666ec457bcd174ab60c3d"
+    },
+    {
+      "task": "place_phone_stand",
+      "path": "dataset/place_phone_stand/aloha-agilex_clean_50.zip",
+      "size": 255542392,
+      "sha256": "745a98306a28fd5e112388489b1973c43b9bb9946233c7ab4f1e40c6d1b5d065"
+    },
+    {
+      "task": "move_stapler_pad",
+      "path": "dataset/move_stapler_pad/aloha-agilex_clean_50.zip",
+      "size": 286330480,
+      "sha256": "775a4932559327339b0bb7fa8ff6fd136dbcf5c9e1d495a6e9f0334fbe494527"
+    },
+    {
+      "task": "open_laptop",
+      "path": "dataset/open_laptop/aloha-agilex_clean_50.zip",
+      "size": 418553810,
+      "sha256": "89407cff2389d80d8b2df9a9228775ccbebb7cf470e22704b9655d887d0ec4a3"
+    },
+    {
+      "task": "pick_diverse_bottles",
+      "path": "dataset/pick_diverse_bottles/aloha-agilex_clean_50.zip",
+      "size": 327815050,
+      "sha256": "95e6527af4857cd6141047cadf39105ca6f917601ac26e08ff54d8d6589147a4"
+    },
+    {
+      "task": "pick_dual_bottles",
+      "path": "dataset/pick_dual_bottles/aloha-agilex_clean_50.zip",
+      "size": 320663140,
+      "sha256": "39de6dfd41d020933bc209c5b60479eaf3e45a1c6a5ed7debf7be41af6c52a42"
+    },
+    {
+      "task": "place_a2b_left",
+      "path": "dataset/place_a2b_left/aloha-agilex_clean_50.zip",
+      "size": 311043880,
+      "sha256": "e7aad39683853ac31c605c7b8317576eaae8927c183e84d62428c29c9f44a465"
+    },
+    {
+      "task": "place_a2b_right",
+      "path": "dataset/place_a2b_right/aloha-agilex_clean_50.zip",
+      "size": 302808692,
+      "sha256": "ecf2f3ee62973220b23c8cd8bf2c3301f1c116f745b3df615760fa378767eac2"
+    },
+    {
+      "task": "place_bread_basket",
+      "path": "dataset/place_bread_basket/aloha-agilex_clean_50.zip",
+      "size": 650985692,
+      "sha256": "f5730c4cc254601dbfdbbc55fe91c8f62bcf3c52011939fe60b4f5bf9a4b156a"
+    },
+    {
+      "task": "place_bread_skillet",
+      "path": "dataset/place_bread_skillet/aloha-agilex_clean_50.zip",
+      "size": 394729396,
+      "sha256": "f0570822c1286b7610a3bec1018f421548df0002c98b9392a0f809cf5245cfb3"
+    },
+    {
+      "task": "place_burger_fries",
+      "path": "dataset/place_burger_fries/aloha-agilex_clean_50.zip",
+      "size": 689932579,
+      "sha256": "23ebeffcb668e55ef6d560a169c3a68032017a080a8228d97da57538844de0b1"
+    },
+    {
+      "task": "place_can_basket",
+      "path": "dataset/place_can_basket/aloha-agilex_clean_50.zip",
+      "size": 679970104,
+      "sha256": "5972dcde682e9395f16c8fd407b8ab38627d5378ea2a01c4944b4b16436e1a4d"
+    },
+    {
+      "task": "press_stapler",
+      "path": "dataset/press_stapler/aloha-agilex_clean_50.zip",
+      "size": 213699969,
+      "sha256": "233188b276f97b7c40cbf5e9ce44b5ccc223946eaa9013ee0df8ab9303c376f4"
+    },
+    {
+      "task": "rotate_qrcode",
+      "path": "dataset/rotate_qrcode/aloha-agilex_clean_50.zip",
+      "size": 276321846,
+      "sha256": "81d80f668fbd0af6f79428593bfc2a9d5f59445cfbf91009ff4cf8e5fd5898fa"
+    },
+    {
+      "task": "shake_bottle_horizontally",
+      "path": "dataset/shake_bottle_horizontally/aloha-agilex_clean_50.zip",
+      "size": 483114791,
+      "sha256": "605c099234ba3a1f471fce6d5339adc8ff816e926cac2ce782579af1f3ab555d"
+    },
+    {
+      "task": "shake_bottle",
+      "path": "dataset/shake_bottle/aloha-agilex_clean_50.zip",
+      "size": 427689943,
+      "sha256": "dc5b09dc2c1cb932bd60722d4f8295b4d89d3703ae5e4020f17318e3da730e36"
+    },
+    {
+      "task": "stack_blocks_two",
+      "path": "dataset/stack_blocks_two/aloha-agilex_clean_50.zip",
+      "size": 601634751,
+      "sha256": "49f0a3581142be4934b5e25cd9e315432315a069ba26e65318417ed691389ecd"
+    },
+    {
+      "task": "stack_bowls_two",
+      "path": "dataset/stack_bowls_two/aloha-agilex_clean_50.zip",
+      "size": 622234585,
+      "sha256": "e3fbb78738e195387a14e80cdfd7270db4743271a951400be2a21e8ecddb9f9a"
+    },
+    {
+      "task": "stamp_seal",
+      "path": "dataset/stamp_seal/aloha-agilex_clean_50.zip",
+      "size": 264588288,
+      "sha256": "f23fa7187f4d95f0498a9cd273acead4bcca6ecefc98c602d0ba9b2995520141"
+    },
+    {
+      "task": "turn_switch",
+      "path": "dataset/turn_switch/aloha-agilex_clean_50.zip",
+      "size": 160462010,
+      "sha256": "e3af06581e4a89c0ef438453e6e3b2449aaee3d5f1ee812ac6866ced0e735cc4"
+    },
+    {
+      "task": "put_bottles_dustbin",
+      "path": "dataset/put_bottles_dustbin/aloha-agilex_clean_50.zip",
+      "size": 1644675302,
+      "sha256": "ca3e2620150854946bf07c8fe5f4d148d77b0d988bc3586683ea3c185de57b23"
+    }
+  ]
+}
